@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>The Ledger / CryptoBilis drain, 9 October 2026: 66.69M USDT and 203.79 BTC traced, what Tether froze, and what still sits on attacker wallets</title>
+<meta name="description" content="Ledger / CryptoBilis drain, 9 Oct 2026: 66.69M USDT and 203.79 BTC traced, Tether's freeze, Tornado exit, held balances. Balances read 18:46 UTC, 12 Oct 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300;400;600;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:light-dark(#ffffff,#0a0a0a);--ink:light-dark(#1c1c1c,#d0d0d0);--hi:light-dark(#000000,#f5f5f5);
+  --mut:light-dark(#555555,#8c8c8c);--faint:light-dark(#6b6b6b,#6a6a6a);--line:light-dark(#8f8f8f,#3d3d3d);
+  --rule:light-dark(#d9d9d9,#2a2a2a);--panel:light-dark(#f3f3f3,#121212);--sig:light-dark(#000000,#f5f5f5);
+  --sigtx:light-dark(#ffffff,#0a0a0a);
+}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+@supports not (color:light-dark(#000,#fff)){
+  :root{--bg:#0a0a0a;--ink:#d0d0d0;--hi:#f5f5f5;--mut:#8c8c8c;--faint:#6a6a6a;--line:#3d3d3d;--rule:#2a2a2a;--panel:#121212;--sig:#f5f5f5;--sigtx:#0a0a0a}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+a{color:var(--ink)}a:hover{color:var(--hi)}
+.page{max-width:980px;margin:0 auto;padding:16px}
+.sheet{position:relative;border:1px solid var(--line);padding:44px 52px 40px}
+.sheet::before,.sheet::after{content:"";position:absolute;left:0;right:0;height:7px;pointer-events:none;
+  background:repeating-linear-gradient(to right,transparent 0,transparent calc(12.5% - 1px),var(--line) calc(12.5% - 1px),var(--line) 12.5%)}
+.sheet::before{top:0}.sheet::after{bottom:0}
+.bar{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;color:var(--mut)}
+.bar b{color:var(--ink);font-weight:400}
+.bar button{font:inherit;color:var(--mut);background:none;border:1px solid var(--line);padding:2px 8px;cursor:pointer;min-height:28px}
+.bar button:hover{color:var(--hi);border-color:var(--mut)}
+.kick{margin-top:26px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;letter-spacing:.18em;font-size:12px}
+.kick .blk{width:10px;height:18px;background:var(--hi);flex:none}
+.kick .k1{color:var(--hi)}
+.kick .k2{color:var(--mut);letter-spacing:.1em}
+.chip{background:var(--sig);color:var(--sigtx);padding:0 6px}
+h1{margin:16px 0 0;font-family:'Martian Mono','IBM Plex Mono',monospace;font-weight:800;font-size:clamp(20px,3.6vw,31px);
+  line-height:1.16;letter-spacing:-.02em;color:var(--hi);text-wrap:balance}
+.legend{margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--mut)}
+.cf{white-space:nowrap}.cf i{display:inline-block;width:20px;height:0;border-top:1.5px solid currentColor;vertical-align:middle;margin-right:6px;position:relative;top:-1px}
+.cf.m i{border-top-style:dashed}.cf.l i{border-top:2px dotted currentColor}
+.legend .cf{margin-right:10px}
+.nav{margin-top:22px;display:flex;flex-wrap:wrap;gap:6px 22px;color:var(--mut);font-size:12px}
+.nav a{color:var(--mut);text-decoration:none;border-bottom:1px solid var(--rule)}
+.nav a:hover{color:var(--hi);border-color:var(--mut)}
+.nav a span{color:var(--ink)}
+.div{margin-top:40px;display:flex;align-items:center;gap:10px;color:var(--mut)}
+.div span:first-child,.div span:last-child{color:var(--ink)}
+.div i{flex:1;border-top:1px dashed var(--line);height:0}.div b{width:48px;border-top:1px dashed var(--line);height:0}
+h2{margin:30px 0 0;font-family:'Martian Mono','IBM Plex Mono',monospace;font-weight:600;font-size:clamp(16px,2.6vw,21px);
+  line-height:1.25;color:var(--hi);padding-top:14px;border-top:1px solid var(--line);scroll-margin-top:12px}
+h2 .no{color:var(--mut)}h2 .sep{margin:0 .5em;color:var(--mut)}
+.div + h2{border-top:0;padding-top:0;margin-top:16px}
+.strip{margin-top:18px;border:1px solid var(--line);background:var(--panel);padding:12px 16px 4px}
+.strip .cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--mut);letter-spacing:.08em}
+.strip .ch2{color:var(--hi)}
+.strip .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 22px}
+.st{padding:12px 0 12px;border-top:1px solid var(--rule);margin-top:10px}
+.strip .grid .st:nth-child(-n+4){border-top:0;margin-top:6px}
+.st .v{font-family:'Martian Mono','IBM Plex Mono',monospace;font-weight:600;font-size:clamp(15px,2.2vw,19px);color:var(--hi);line-height:1.2;white-space:nowrap}
+.st .l{margin-top:4px;color:var(--mut);font-size:12px;line-height:1.4;overflow-wrap:break-word}
+.snap{margin-top:18px;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.snap .chip{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:2px 8px;display:inline-block;margin-bottom:6px}
+.note{margin-top:0;padding:12px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 20px}
+.note:last-of-type{border-bottom:1px solid var(--rule)}
+.lab{color:var(--hi);font-weight:600}
+.txt{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.snap + .note{margin-top:14px}
+.para{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:14.5px;line-height:1.6;margin:14px 0 0}
+.rows{list-style:none;margin:12px 0 0;padding:0}
+.rows>li{position:relative;padding:11px 0 11px 20px;border-top:1px solid var(--rule)}
+.rows>li:last-child{border-bottom:1px solid var(--rule)}
+.rows>li::before{content:"";position:absolute;left:0;top:21px;width:10px;height:0;border-top:1.5px solid var(--mut)}
+.lead,.trail{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.trail{margin-top:8px}
+strong{color:var(--hi);font-weight:600}
+code{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;color:var(--hi);overflow-wrap:anywhere;word-break:break-all}
+a.ad,a.tx{text-decoration:underline dotted;text-decoration-color:var(--mut);text-underline-offset:3px}
+a.ad:hover,a.tx:hover{text-decoration-style:solid;text-decoration-color:var(--hi)}
+@media (min-width:641px){a.ad,a.tx{display:inline-block;max-width:100%;vertical-align:bottom}}
+a.u{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--mut)}
+a.u:hover{text-decoration-color:var(--hi)}
+a.mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;word-break:break-all}
+em.cn{font-style:normal;color:var(--mut)}
+em.cn .cf{color:var(--ink)}
+.tw{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tw.sub{margin-top:10px}
+.t{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.5}
+.t th{color:var(--mut);font-weight:400;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--ink);white-space:nowrap}
+.t td{padding:6px 10px 6px 0;border-bottom:1px solid var(--rule);white-space:nowrap;color:var(--ink)}
+.t td:first-child{color:var(--hi)}
+.t th+th,.t td+td{padding-left:22px}
+.t .n{text-align:right}
+.t.compact{max-width:600px}
+.t.compact td:first-child{white-space:normal}
+.t.compact code{font-size:12px}
+.dep{margin-top:14px;border:1px solid var(--line);padding:10px 14px 6px}
+.dh{display:flex;flex-wrap:wrap;gap:4px 18px;padding-bottom:8px;border-bottom:1px solid var(--rule);align-items:baseline}
+.dh .tm{color:var(--hi)}.dh .ch{color:var(--mut);letter-spacing:.08em;text-transform:uppercase}.dh .am{margin-left:auto;color:var(--hi);font-weight:600}
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 14px;padding:7px 0;border-top:1px solid var(--rule)}
+.dh + .kv{border-top:0}
+.kv .k{color:var(--mut)}.kv .v{min-width:0}
+.foot{margin-top:40px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.foot .by{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:12.5px;line-height:1.5;color:var(--mut);max-width:420px}
+.stamp{flex:0 0 300px;border:1px solid var(--line);background:var(--bg);font-size:12px}
+.stamp div{display:flex;justify-content:space-between;gap:12px;padding:5px 10px;border-top:1px solid var(--line)}
+.stamp div:first-child{border-top:1px solid transparent}
+.stamp div:first-child span:first-child{color:var(--ink);font-weight:600}
+.stamp span:first-child{color:var(--mut)}.stamp span:last-child{color:var(--ink);text-align:right}
+@media (max-width:860px){.strip .grid{grid-template-columns:repeat(2,minmax(0,1fr))}.strip .grid .st:nth-child(-n+4){border-top:1px solid var(--rule);margin-top:10px}.strip .grid .st:nth-child(-n+2){border-top:0;margin-top:6px}}
+@media (max-width:640px){
+  .sheet{padding:34px 16px 30px}
+  .note{grid-template-columns:minmax(0,1fr)}
+  .kv{grid-template-columns:minmax(0,1fr);gap:2px}
+  .stamp{flex-basis:100%}
+  .dh .am{margin-left:0}
+  .st .v{font-size:14px}
+}
+@media print{
+  :root,:root[data-theme]{color-scheme:light}
+  .bar button{display:none}.sheet{border-color:#8f8f8f}.dep,.rows>li{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="page"><main class="sheet">
+<div class="bar"><div><b>fish</b> — ~/cases/ledger-cryptobilis-2026-10 · <b>forensics</b></div>
+<div><button id="th" type="button" aria-label="Switch colour theme">theme: auto</button></div>
+</div>
+<div class="kick"><span class="blk"></span><span class="k1">INVESTIGATION REPORT</span><span class="chip">BALANCES 18:46 UTC</span><span class="k2">LEDGER / CRYPTOBILIS DRAIN · 9 OCT 2026</span></div>
+<h1>The Ledger / CryptoBilis drain, 9 October 2026: 66.69M USDT and 203.79 BTC traced, what Tether froze, and what still sits on attacker wallets</h1>
+<div class="legend">conf. <span class="cf h"><i></i>High</span><span class="cf m"><i></i>Medium</span><span class="cf l"><i></i>Low</span><span>times UTC</span></div>
+<nav class="nav" aria-label="Sections"><a href="#bluf"><span>00</span> BLUF</a><a href="#s1"><span>01</span> How I started</a><a href="#s2"><span>02</span> Collectors, distributors and the frozen parcels</a><a href="#s3"><span>03</span> The seven rails</a><a href="#s4"><span>04</span> Tornado Cash and the exit to Zcash</a><a href="#s5"><span>05</span> USDD: a detour inside the rails</a><a href="#s6"><span>06</span> Bitcoin</a><a href="#s7"><span>07</span> The other chains</a><a href="#s8"><span>08</span> Held and moving</a><a href="#s9"><span>09</span> Exchange deposit addresses</a><a href="#s10"><span>10</span> Addresses removed from my list</a><a href="#s11"><span>11</span> Open items</a><a href="#a"><span>A</span> Appendix: transaction hashes</a></nav>
+<div class="div"><span>A</span><i></i><span>section A-A · bottom line</span><b></b><span>A</span></div>
+<h2 id="bluf"><span class="no">00</span><span class="sep">·</span>BLUF</h2>
+<div class="strip"><div class="cap"><span class="ch2">key figures</span><span>balances 18:46 UTC · 12 Oct 2026</span></div>
+<div class="grid"><div class="st"><div class="v">66,688,015</div>
+<div class="l">USDT traced on TRON from the collector wallets</div>
+</div>
+<div class="st"><div class="v">10,000,001.11</div>
+<div class="l">USDT frozen by Tether on 20 wallets, read 18:46 UTC</div>
+</div>
+<div class="st"><div class="v">56,688,014</div>
+<div class="l">USDT into seven bridges and swap services, 158 transfers</div>
+</div>
+<div class="st"><div class="v">50,126,288</div>
+<div class="l">USDT matched to a payout on the destination chain</div>
+</div>
+<div class="st"><div class="v">18,993.32</div>
+<div class="l">ETH in 17 wallets with at least 1 ETH, read 18:46 UTC</div>
+</div>
+<div class="st"><div class="v">203.79</div>
+<div class="l">BTC unspent on the two Bitcoin collectors, read 18:46 UTC</div>
+</div>
+<div class="st"><div class="v">6,758.3</div>
+<div class="l">ETH into Tornado Cash, 560 deposits</div>
+</div>
+<div class="st"><div class="v">899.71</div>
+<div class="l">ZEC paid to shielded Zcash addresses in 7 transactions on 10 Oct</div>
+</div>
+</div>
+</div>
+<ul class="rows"><li><div class="lead">I traced 66,688,015 USDT on TRON from the collector wallets: 10,000,001.11 USDT is frozen by Tether on 20 wallets, and 56,688,014 USDT went into seven bridges and swap services in 158 transfers from 91 TRON wallets. Of that, 50,126,288 USDT is matched to a payout on the destination chain, 5,906,180 USDT (Chainflip) is accounted for in Chainflip&#x27;s own records (4,006,165 swapped; 1,900,015 not swapped and refunded to the sending TRON wallets), and 655,546 USDT (355,546 HiFiSwap, 300,000 Bridgers) has no order in the services&#x27; lookups.</div>
+</li>
+<li><div class="lead">203.78822333 BTC was swept from 122 wallets into two collectors at 05:54 and 06:15 UTC on 9 Oct. Both collectors show zero spends, and both balances are unchanged at the snapshot.</div>
+</li>
+<li><div class="lead">At the snapshot, 17 wallets with at least 1 ETH each hold 18,993.32 ETH in total. Several of them are rail destinations, so this ETH is partly the other end of the USDT above; the two are not additive. Two of them moved 40 ETH each on 12 Oct, at 14:39:47 and 17:18:11 UTC, and both sent it on into Tornado Cash in 10 ETH deposits.</div>
+</li>
+<li><div class="lead">6,758.3 ETH went into Tornado Cash in 560 deposits: 6,678.3 ETH in 552 deposits from 60 wallets, and 80 ETH in 8 deposits from two forwarding wallets on 12 Oct. Tornado paid 445.2 ETH out to two wallets on 10 Oct; seven hop wallets sent 445.2 ETH to NEAR Intents, and NEAR Intents paid 899.71 ZEC to shielded Zcash addresses in seven transactions between 12:27 and 13:54 UTC on 10 Oct, where the trail ends.</div>
+</li>
+<li><div class="lead">I walked every chain the funds touched: TRON, Ethereum, Bitcoin, Solana, Polygon, Arbitrum, Base and BNB Chain. Avalanche and Optimism show no activity from any attacker address. Section 7 gives each chain&#x27;s result.</div>
+</li>
+<li><div class="lead">6 TRON wallets swapped 26,367,864 USDT into USDD in 55 swaps. The USDD was swapped back into USDT at a swap venue and the USDT went into THORChain, Relay and Chainflip. 8,696,189 USDT of the THORChain entries and 1,305,015 USDT of the Chainflip entries in section 3 took this detour, so they are already inside the 56,688,014 above (section 5).</div>
+</li>
+<li><div class="lead">I removed 7 addresses from my list after checking their paths (section 10); their rail transfers are out of every figure here.</div>
+</li>
+<li><div class="lead">Who can act: Tether, which froze the 20 wallets between 12:09 and 14:10 UTC on 9 Oct (section 2); the exchanges behind three deposit addresses (section 9); and the services behind the unresolved rails.</div>
+</li>
+</ul>
+<div class="snap"><span class="chip">Snapshot: balances 18:46 UTC, rail resolution 18:54 UTC, 12 Oct 2026.</span> <span class="rest">Balances (ETH, BTC, TRON USDT and the Tether blacklist) are one pass between 18:37 and 18:46 UTC. Transactions on the map and in the hop table run up to 18:37:19 UTC; the Tornado deposits of 12 Oct in section 4 I read at 18:53 UTC.</span></div>
+<div class="note"><div class="lab">Author</div>
+<div class="txt">Phil Grushyn (<a class="u" href="https://linkedin.com/in/philgr" target="_blank" rel="noopener noreferrer">LinkedIn</a>)</div>
+</div>
+<div class="note"><div class="lab">Corrections to the earlier version of this report</div>
+<div class="txt">The headline moves from 67,719,350 to 66,688,015 USDT traced and the rails from 57,719,349 to 56,688,014 USDT (173 to 158 transfers, 97 to 91 sending wallets): a 1,000,000 USDT transfer into a Chainflip deposit channel was counted twice (section 3), and five TRON wallets with no path to the theft are out (section 10). The Bitcoin held figure moves from 214.22 to 203.79 BTC: 10.43 BTC on three wallets of a separate strand is not counted (section 6). The first Tornado deposit I count is 9 Oct 15:17:23 UTC; the earlier text gave the start of my search window.</div>
+</div>
+<div class="note"><div class="lab">Ledger&#x27;s statements</div>
+<div class="txt">Ledger has not stated a total loss. On 9 Oct 2026 at 13:32:12 UTC it said it was investigating reports of loss of funds from users in South East Asia who bought from a reseller named CryptoBillis (<a class="u mono" href="https://x.com/Ledger_Support/status/2108551100613714002" target="_blank" rel="noopener noreferrer">https://x.com/Ledger_Support/status/2108551100613714002</a>). On 10 Oct at 17:09:51 UTC it confirmed that one impacted user&#x27;s device contained an unauthorized hardware implant (<a class="u mono" href="https://x.com/Ledger_Support/status/2108968264055345381" target="_blank" rel="noopener noreferrer">https://x.com/Ledger_Support/status/2108968264055345381</a>). On 11 Oct at 17:13:22 UTC it said the volume of impacted devices is limited and that all confirmed cases involve devices sold through CryptoBilis (<a class="u mono" href="https://x.com/Ledger/status/2109331538072494364" target="_blank" rel="noopener noreferrer">https://x.com/Ledger/status/2109331538072494364</a>). Public estimates by others are higher than my figures; I have not tested any of them. Post times are the status-id times and match each page&#x27;s own timestamp. I did not re-read these statements for this update.</div>
+</div>
+<div class="note"><div class="lab">Scope</div>
+<div class="txt">every chain the funds touched. TRON USDT from the drain collectors to the rails and to Tether&#x27;s freeze at 12:09 to 14:10 UTC on 9 Oct; the USDD detour; the Bitcoin collectors and the 122 wallets swept into them; Ethereum wallets the rails paid; Tornado Cash deposits and withdrawals on Ethereum; the BNB Chain, Polygon, Arbitrum, Base and Solana legs; Avalanche and Optimism probed per address; balances of the ETH and BTC wallets in the case. Every figure below comes from a transaction, a contract read or a service&#x27;s own order record that anyone can repeat; hashes are in the appendix.</div>
+</div>
+<div class="note"><div class="lab">Not covered</div>
+<div class="txt">the seven USDD walks I valued start from 14,760,224 USD, 56% of the 26,367,864 USDT swapped; an eighth recipient walk was still running at the snapshot, and I make no claim about the rest. 4,983,502 USD of the walked USDD value sits on wallets I have not expanded. HiFiSwap (3 of 49 orders), one Bridgers order and one NEAR Intents order are not resolved. The Tornado withdrawals are not linked to individual deposits. I did not trace the two forwarding wallets of 12 Oct past their Tornado deposits, and a large Solana wallet that Relay paid is not attributed (section 7).</div>
+</div>
+<div class="note"><div class="lab">Confidence</div>
+<div class="txt"><span class="cf h"><i></i>High</span> = read from a signed transaction, a contract call or a service&#x27;s own order record. <span class="cf m"><i></i>Medium</span> = an inference from <span class="cf h"><i></i>High</span> facts. <span class="cf l"><i></i>Low</span> = a hypothesis.</div>
+</div>
+<h2 id="s1"><span class="no">01</span><span class="sep">·</span>How I started</h2>
+<p class="para">Collector addresses were already in public write-ups by Specter, SEAL 911, Bitquery and YFarmX. I read each one on chain, kept the ones that matched the drain&#x27;s timing and flows, and walked forward from them. Everything below is a transfer I read myself. The first rail deposit I traced is 05:41:18 UTC on 9 Oct (USDT0, 500,000 USDT, tx <a class="tx" href="https://tronscan.org/#/transaction/14363215f8666b403ed1fc10776f9fd3dd7051898c4a93e4ba914e392edda898" target="_blank" rel="noopener noreferrer"><code>14363215f8666b403ed1fc10776f9fd3dd7051898c4a93e4ba914e392edda898</code></a>). <em class="cn">(<span class="cf h"><i></i>High</span>)</em></p>
+<h2 id="s2"><span class="no">02</span><span class="sep">·</span>Collectors, distributors and the frozen parcels</h2>
+<ul class="rows"><li><div class="lead"><a class="ad" href="https://tronscan.org/#/address/TK6DWNpNe1w2iJRNFpU8aHdrPTATxvXT6C" target="_blank" rel="noopener noreferrer"><code>TK6DWNpNe1w2iJRNFpU8aHdrPTATxvXT6C</code></a> sent 10,000,000.000039 USDT to the distributor <a class="ad" href="https://tronscan.org/#/address/TPZwqN2gq3yb7JMX9CfiLCdW4G6XvnuSSk" target="_blank" rel="noopener noreferrer"><code>TPZwqN2gq3yb7JMX9CfiLCdW4G6XvnuSSk</code></a> at 10:06:36 UTC on 9 Oct (tx <a class="tx" href="https://tronscan.org/#/transaction/77a3372ec8bf99a119fde6b7666d7901cdcec8e7d7ffa4284c2aa9fdefe1dd51" target="_blank" rel="noopener noreferrer"><code>77a3372ec8bf99a119fde6b7666d7901cdcec8e7d7ffa4284c2aa9fdefe1dd51</code></a>). <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead"><a class="ad" href="https://tronscan.org/#/address/TBkcUMYC7CkTK99tkTnaStQVBastfrs9d9" target="_blank" rel="noopener noreferrer"><code>TBkcUMYC7CkTK99tkTnaStQVBastfrs9d9</code></a> sent 4,167,708.226869 USDT to the distributor <a class="ad" href="https://tronscan.org/#/address/TViYzoyw3sExbhD2etYygUTDjSacqSGzfh" target="_blank" rel="noopener noreferrer"><code>TViYzoyw3sExbhD2etYygUTDjSacqSGzfh</code></a> at 10:11:18 UTC (tx <a class="tx" href="https://tronscan.org/#/transaction/43c61e7090b7b71fce68ead04978ba507372bb9c54b15a284ace475ca086c50c" target="_blank" rel="noopener noreferrer"><code>43c61e7090b7b71fce68ead04978ba507372bb9c54b15a284ace475ca086c50c</code></a>). <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Of the 91 TRON wallets that paid the rails, 60 trace back to a collector within three USDT hops of at least 20,000 USDT each. For the other 31 I searched over any token (USDT, TRX, USDD) up to eight hops: 30 are linked by paths of 2 to 5 hops, and one is named as a drain address in the Bitquery investigation. <em class="cn">(<span class="cf m"><i></i>Medium</span>: the hop limits and the 20,000 USDT cut-off are my own, uncalibrated)</em></div>
+</li>
+<li><div class="lead">I read 53 TRON wallets against Tether&#x27;s USDT blacklist by contract call, between 18:44 and 18:46 UTC on 12 Oct. 33 are blacklisted. One of the 33, <a class="ad" href="https://tronscan.org/#/address/THvPCrsu2BwF3NRywFYhTu9Wsfwr59cQmo" target="_blank" rel="noopener noreferrer"><code>THvPCrsu2BwF3NRywFYhTu9Wsfwr59cQmo</code></a>, is not an attacker wallet (section 10), so 32 attacker-set wallets are blacklisted: 31 at 12:09:39 to 12:09:45 UTC on 9 Oct and one at 14:10:51 UTC. 20 of them hold 10,000,001.11 USDT (19 x 500,000.00 and one 500,001.11); 19 of those 20 were blacklisted at 12:09:42 to 12:09:45 UTC and the twentieth at 14:10:51 UTC. 12 blacklisted attacker-set wallets hold 0 USDT. <a class="ad" href="https://tronscan.org/#/address/TViYzoyw3sExbhD2etYygUTDjSacqSGzfh" target="_blank" rel="noopener noreferrer"><code>TViYzoyw3sExbhD2etYygUTDjSacqSGzfh</code></a> is absent from the issuer&#x27;s blacklist and holds 0 USDT. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Other USDT on TRON outside the 20 wallets: seven attacker-set wallets hold 36.37, 14.00, 5.74, 0.95, 0.26, 0.18 and 0.16 USDT. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">On the EVM chains I read 13 issuer token contracts (USDT, USDC, PYUSD, USDT0 and XAUT on Ethereum, Arbitrum, Base, Optimism, Polygon and Avalanche) for the attacker-set Ethereum-format addresses between 18:39 and 18:43 UTC: 26.09 USD in total, and the issuers&#x27; contracts list every one of these addresses as live. BNB Chain is not in this sweep. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+</ul>
+<h2 id="s3"><span class="no">03</span><span class="sep">·</span>The seven rails</h2>
+<p class="para">56,688,014 USDT left 91 TRON wallets in 158 transfers. The USDT amounts, entry counts and times in the table are TRON transfers, without the five removed wallets (section 10). One 1,000,000 USDT transfer into a Chainflip deposit channel is the same money the Chainflip Vault fetched three minutes later; I count it once. &quot;Resolved&quot; means I matched an entry transaction to the payout on the destination chain from the service&#x27;s own order record or an on-chain message id; the order counts cover the 187 service orders of the wallets I kept, on all source chains, read at 18:54 UTC.</p>
+<div class="tw"><table class="t"><tr><th>Rail</th><th class=n>USDT in (TRON)</th><th class=n>Entry txs (TRON)</th><th class=n>Sending wallets</th><th>First to last TRON entry (UTC)</th><th>Orders resolved (all chains)</th></tr><tr><td>USDT0 bridge</td><td class=n>20,000,000</td><td class=n>40</td><td class=n>40</td><td>9 Oct 05:41 to 07:43</td><td>40 of 40</td></tr><tr><td>THORChain</td><td class=n>18,128,515</td><td class=n>26</td><td class=n>23</td><td>9 Oct 09:02 to 11 Oct 16:19</td><td>26 of 26</td></tr><tr><td>Relay</td><td class=n>9,497,773</td><td class=n>36</td><td class=n>9</td><td>9 Oct 06:35 to 14:02</td><td>38 of 44</td></tr><tr><td>Chainflip</td><td class=n>5,906,180</td><td class=n>13</td><td class=n>12</td><td>9 Oct 08:51 to 11 Oct 11:35</td><td>13 of 13 in the service&#x27;s records</td></tr><tr><td>NEAR Intents</td><td class=n>2,200,000</td><td class=n>6</td><td class=n>6</td><td>9 Oct 06:33 to 08:25</td><td>6 of 7</td></tr><tr><td>Bridgers</td><td class=n>600,000</td><td class=n>4</td><td class=n>3</td><td>9 Oct 06:36 to 07:20</td><td>3 of 7</td></tr><tr><td>HiFiSwap</td><td class=n>355,546</td><td class=n>33</td><td class=n>1</td><td>12 Oct 11:19 to 13:41</td><td>3 of 49</td></tr></table>
+</div>
+<p class="para">Resolved destinations, all <em class="cn">(<span class="cf h"><i></i>High</span>)</em> (protocol identifiers, not timing):</p>
+<ul class="rows"><li><div class="lead">USDT0 (40 of 40): 40 transfers of 500,000 USDT arrived as 19,994,000 USDT on five Ethereum wallets:</div>
+<div class="tw sub"><table class="t compact"><tr><th>wallet</th><th class="n">USDT</th></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xeD57b891C0Da306369eA5Bb0a2c02B78BdD6b1bA" target="_blank" rel="noopener noreferrer"><code>0xeD57b891C0Da306369eA5Bb0a2c02B78BdD6b1bA</code></a></td><td class="n">4,998,500</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xed43bB5404F3e9225Aa6f020C89D26Ba7A49cbD1" target="_blank" rel="noopener noreferrer"><code>0xed43bB5404F3e9225Aa6f020C89D26Ba7A49cbD1</code></a></td><td class="n">4,998,500</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xC61E3185d0Ea73e41928D21d32Bd2EDdd0AD18e6" target="_blank" rel="noopener noreferrer"><code>0xC61E3185d0Ea73e41928D21d32Bd2EDdd0AD18e6</code></a></td><td class="n">4,998,500</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x6A33D3E252407078E2F432d7E22414CC02208D5f" target="_blank" rel="noopener noreferrer"><code>0x6A33D3E252407078E2F432d7E22414CC02208D5f</code></a></td><td class="n">3,998,800</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xce29803592346a285e17d3C6595B0C0528a3C647" target="_blank" rel="noopener noreferrer"><code>0xce29803592346a285e17d3C6595B0C0528a3C647</code></a></td><td class="n">999,700</td></tr></table>
+</div>
+<div class="trail">Entries on TRON ran from 9 Oct 05:41 to 07:43 UTC; payouts from 05:43 to 07:45 UTC (entry time plus the reported latency).</div>
+</li>
+<li><div class="lead">THORChain (26 of 26): the swap memo names the payout wallet, and the sender sets it. 7,189.07 ETH went to nine Ethereum wallets. The TRON entries ran 9 Oct 09:02 to 11 Oct 16:19 UTC; the payouts ran 9 Oct 12:15 to 11 Oct 23:23 UTC (entry time plus the reported latency):</div>
+<div class="tw sub"><table class="t compact"><tr><th>wallet</th><th class="n">ETH</th><th class="n">swaps</th></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x65B66749148ba4908aC15609D827887265B2a62a" target="_blank" rel="noopener noreferrer"><code>0x65B66749148ba4908aC15609D827887265B2a62a</code></a></td><td class="n">1,745.20</td><td class="n">4</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xa2F0AFC2B7af4bcc56aADaA870cA4f5Ead987a87" target="_blank" rel="noopener noreferrer"><code>0xa2F0AFC2B7af4bcc56aADaA870cA4f5Ead987a87</code></a></td><td class="n">1,176.79</td><td class="n">3</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xC551875DC6d5c480E22e60b80f624Db68A5E86Cf" target="_blank" rel="noopener noreferrer"><code>0xC551875DC6d5c480E22e60b80f624Db68A5E86Cf</code></a></td><td class="n">1,050.16</td><td class="n">3</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x5BF6B2E56Eb7AD34AA2B70F87a6f84b0ED9CCA0c" target="_blank" rel="noopener noreferrer"><code>0x5BF6B2E56Eb7AD34AA2B70F87a6f84b0ED9CCA0c</code></a></td><td class="n">795.68</td><td class="n">4</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xce29803592346a285e17d3C6595B0C0528a3C647" target="_blank" rel="noopener noreferrer"><code>0xce29803592346a285e17d3C6595B0C0528a3C647</code></a></td><td class="n">793.66</td><td class="n">4</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x93F88A27d1844a113e810105f7b9b7eE4aBB8091" target="_blank" rel="noopener noreferrer"><code>0x93F88A27d1844a113e810105f7b9b7eE4aBB8091</code></a></td><td class="n">792.48</td><td class="n">3</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xA4C4a964B569A69b735E31F3c50ec85074412d30" target="_blank" rel="noopener noreferrer"><code>0xA4C4a964B569A69b735E31F3c50ec85074412d30</code></a></td><td class="n">397.76</td><td class="n">2</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x82F65df4A44d904804C328d69d9EFd0683e33208" target="_blank" rel="noopener noreferrer"><code>0x82F65df4A44d904804C328d69d9EFd0683e33208</code></a></td><td class="n">397.45</td><td class="n">2</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xDc981029bbC1fE273bE3a4F087D7A03eee76B56F" target="_blank" rel="noopener noreferrer"><code>0xDc981029bbC1fE273bE3a4F087D7A03eee76B56F</code></a></td><td class="n">39.90</td><td class="n">1</td></tr></table>
+</div>
+</li>
+<li><div class="lead">Relay (38 of 44 orders): 37 ETH payouts of 3,663.38 ETH in total: 19 of them, 1,156.92 ETH, to <a class="ad" href="https://etherscan.io/address/0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E" target="_blank" rel="noopener noreferrer"><code>0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E</code></a>; further payouts to <a class="ad" href="https://etherscan.io/address/0x8053C9e2d053F20C02ebf32ea6e9205b610d39f2" target="_blank" rel="noopener noreferrer"><code>0x8053C9e2d053F20C02ebf32ea6e9205b610d39f2</code></a> (796.08 ETH, 4), <a class="ad" href="https://etherscan.io/address/0x4C805486c56C295Ee5414A88545D9943F5D7F8C3" target="_blank" rel="noopener noreferrer"><code>0x4C805486c56C295Ee5414A88545D9943F5D7F8C3</code></a> (795.64, 5), <a class="ad" href="https://etherscan.io/address/0xA4C4a964B569A69b735E31F3c50ec85074412d30" target="_blank" rel="noopener noreferrer"><code>0xA4C4a964B569A69b735E31F3c50ec85074412d30</code></a> (399.60), <a class="ad" href="https://etherscan.io/address/0x66c7cBdEAc9e8F2d705A57d821D5007E3FB4EdA3" target="_blank" rel="noopener noreferrer"><code>0x66c7cBdEAc9e8F2d705A57d821D5007E3FB4EdA3</code></a> (199.31, 2), <a class="ad" href="https://etherscan.io/address/0x87A19E3e54d010EE7b89327770d1ef839f30F3a7" target="_blank" rel="noopener noreferrer"><code>0x87A19E3e54d010EE7b89327770d1ef839f30F3a7</code></a> (198.31), <a class="ad" href="https://etherscan.io/address/0xfa4EaBB840A33C156E600311433AE261CBfCb0e2" target="_blank" rel="noopener noreferrer"><code>0xfa4EaBB840A33C156E600311433AE261CBfCb0e2</code></a> (57.30, 2) and three smaller ones (40.18, 19.64 and 0.40 ETH). The 38th is a Relay refund-status order (178.07 ETH recorded to <a class="ad" href="https://etherscan.io/address/0x4C805486c56C295Ee5414A88545D9943F5D7F8C3" target="_blank" rel="noopener noreferrer" title="0x4C805486c56C295Ee5414A88545D9943F5D7F8C3"><code>0x4C805486…F8C3</code></a> with a TRON destination chain); it is in none of these totals. Two of the 38 were paid from Solana. The other 6 of the 44 are Relay payouts on Solana to a large wallet; I found no order for them and do not draw them as drain transfers (section 7).</div>
+</li>
+<li><div class="lead">Relay orders paid from other chains (section 7): 11 more orders, 5 from BNB Chain and 6 from Polygon, all succeeded and paid 414.20 ETH on Ethereum.</div>
+</li>
+<li><div class="lead">NEAR Intents (6 of 7): <a class="ad" href="https://etherscan.io/address/0x40eba3C0052ea532226cF0B87215489aAeFAe88c" target="_blank" rel="noopener noreferrer"><code>0x40eba3C0052ea532226cF0B87215489aAeFAe88c</code></a> received 237.30 ETH for two orders of 300,000 USDT each, and the order&#x27;s refund address is a TRON attacker wallet; <a class="ad" href="https://etherscan.io/address/0x83aeaC166f6832aE3500000a24510a95a052A599" target="_blank" rel="noopener noreferrer"><code>0x83aeaC166f6832aE3500000a24510a95a052A599</code></a> received 197.99 ETH. The other three resolved orders show no amount out, so I do not quote them. The unresolved order is 100,000 USDT on Solana: the service&#x27;s deposit address cannot be derived without a Solana node, and I recorded that.</div>
+</li>
+<li><div class="lead">Bridgers (3 of 7), HiFiSwap (3 of 49), LI.FI (1 of 1): the Bridgers payouts are 119.28 ETH to <a class="ad" href="https://etherscan.io/address/0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E" target="_blank" rel="noopener noreferrer" title="0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E"><code>0x468b3A…2A4E</code></a>; HiFiSwap paid 59.47 ETH and 49.25 ETH to <a class="ad" href="https://etherscan.io/address/0x033636e45d519BeBB7b5c2520Ca6CE56FBDB4F7a" target="_blank" rel="noopener noreferrer"><code>0x033636e45d519BeBB7b5c2520Ca6CE56FBDB4F7a</code></a> and <a class="ad" href="https://etherscan.io/address/0x83aeaC166f6832aE3500000a24510a95a052A599" target="_blank" rel="noopener noreferrer" title="0x83aeaC166f6832aE3500000a24510a95a052A599"><code>0x83aeaC…A599</code></a>. Four Bridgers orders and 46 HiFiSwap hashes return no order in the services&#x27; lookups (resCode 927, &quot;Order does not exist&quot; for HiFiSwap); I record each empty answer. I read the 46 as legs between the service&#x27;s own wallets, which is an inference <em class="cn">(<span class="cf m"><i></i>Medium</span>)</em>.</div>
+</li>
+<li><div class="lead">Chainflip (13 of 13 in the service&#x27;s records): every transfer is a transfer into the official Chainflip Tron Vault or into a Chainflip deposit channel, and I read each in Chainflip&#x27;s swap records and the Vault&#x27;s transaction logs. Nine swapped on Ethereum: eight into ETH, 1,591.62 ETH in total to <a class="ad" href="https://etherscan.io/address/0xd60cbffF028ca5EBf78f9eCdF2b8AE2ed1b192E3" target="_blank" rel="noopener noreferrer"><code>0xd60cbffF028ca5EBf78f9eCdF2b8AE2ed1b192E3</code></a> 593.90 (2 swaps), <a class="ad" href="https://etherscan.io/address/0xB9C9350E2b808D87857a5c555560Ba08bE1Ad075" target="_blank" rel="noopener noreferrer"><code>0xB9C9350E2b808D87857a5c555560Ba08bE1Ad075</code></a> 593.53, <a class="ad" href="https://etherscan.io/address/0x368C6Fb3da1252350a58a82312baecbdd2e609E5" target="_blank" rel="noopener noreferrer"><code>0x368C6Fb3da1252350a58a82312baecbdd2e609E5</code></a> 397.84, <a class="ad" href="https://etherscan.io/address/0xce29803592346a285e17d3C6595B0C0528a3C647" target="_blank" rel="noopener noreferrer"><code>0xce29803592346a285e17d3C6595B0C0528a3C647</code></a> 1.99, <a class="ad" href="https://etherscan.io/address/0x03fA7Eb4EDF92b1B3A0b590eFBc4C36a7EaE2fC0" target="_blank" rel="noopener noreferrer"><code>0x03fA7Eb4EDF92b1B3A0b590eFBc4C36a7EaE2fC0</code></a> 1.99, <a class="ad" href="https://etherscan.io/address/0xBDB58B2c08666FfB1f8d560f25f4d7DbA773c393" target="_blank" rel="noopener noreferrer"><code>0xBDB58B2c08666FfB1f8d560f25f4d7DbA773c393</code></a> 1.58 and <a class="ad" href="https://etherscan.io/address/0x9862F0A61567E4301775381534BeDd2D93A16481" target="_blank" rel="noopener noreferrer"><code>0x9862F0A61567E4301775381534BeDd2D93A16481</code></a> 0.80, and one of 1,165 USDT into 1,147.41 USDT on <a class="ad" href="https://etherscan.io/address/0xb042683Fbb0ef9897dD44E6fca436212F5C7eE7e" target="_blank" rel="noopener noreferrer"><code>0xb042683Fbb0ef9897dD44E6fca436212F5C7eE7e</code></a>. Four did not swap: Chainflip refunded 1,900,015 USDT (1,899,985 after fees) to the sending TRON wallets. Two of the USDD swaps in section 5 (999,992 and 305,007 USDT) spend two of these refunds, to the cent.</div>
+</li>
+</ul>
+<h2 id="s4"><span class="no">04</span><span class="sep">·</span>Tornado Cash and the exit to Zcash</h2>
+<ul class="rows"><li><div class="lead">552 deposits of 6,678.3 ETH went into the Tornado Cash pools from 60 depositor wallets, from 9 Oct 15:17:23 UTC to 12 Oct 12:47:35 UTC. The depositors are one to two hops from the attacker&#x27;s Ethereum wallets. They are inferred, not seeds. Sample: 10 ETH at 15:17:23 UTC on 9 Oct from <a class="ad" href="https://etherscan.io/address/0x1827B8964074a8F7A44e306344dfb77565f8d3c4" target="_blank" rel="noopener noreferrer"><code>0x1827B8964074a8F7A44e306344dfb77565f8d3c4</code></a> (tx <a class="tx" href="https://etherscan.io/tx/0x2c081416d0064e80291d8798747604c8f4cd4ed841ff90fcd1863033d87e325c" target="_blank" rel="noopener noreferrer"><code>0x2c081416d0064e80291d8798747604c8f4cd4ed841ff90fcd1863033d87e325c</code></a>). <em class="cn">(<span class="cf m"><i></i>Medium</span>)</em></div>
+</li>
+<li><div class="lead">Eight more deposits of 10 ETH each, 80 ETH, came from two forwarding wallets that each received 40 ETH from a held wallet on 12 Oct. <a class="ad" href="https://etherscan.io/address/0x3b2F9cfec7CD8DE706c64b5d4De9aB19f28DfD70" target="_blank" rel="noopener noreferrer"><code>0x3b2F9cfec7CD8DE706c64b5d4De9aB19f28DfD70</code></a> sent 40 ETH to <a class="ad" href="https://etherscan.io/address/0xF75Cb5036b1e521F6433e017490B61D27A01e5b6" target="_blank" rel="noopener noreferrer"><code>0xF75Cb5036b1e521F6433e017490B61D27A01e5b6</code></a> at 14:39:47 UTC (tx <a class="tx" href="https://etherscan.io/tx/0x7e345db352c8264bdd8ddff097be21cee21b03d25c187b5d148ab66575d4edfc" target="_blank" rel="noopener noreferrer"><code>0x7e345db352c8264bdd8ddff097be21cee21b03d25c187b5d148ab66575d4edfc</code></a>), which made four deposits at 14:45:59, 14:46:47, 14:50:23 and 14:55:23 UTC. <a class="ad" href="https://etherscan.io/address/0xfa4EaBB840A33C156E600311433AE261CBfCb0e2" target="_blank" rel="noopener noreferrer"><code>0xfa4EaBB840A33C156E600311433AE261CBfCb0e2</code></a> sent 40 ETH to <a class="ad" href="https://etherscan.io/address/0x5531734B212Eb6930712eDA5eD8dEAac00568cF7" target="_blank" rel="noopener noreferrer"><code>0x5531734B212Eb6930712eDA5eD8dEAac00568cF7</code></a> at 17:18:11 UTC (tx <a class="tx" href="https://etherscan.io/tx/0x8d896c13dfedaa692dbcf77ebe42e96c0ef21fb283050a4edccbe8bfa793a91e" target="_blank" rel="noopener noreferrer"><code>0x8d896c13dfedaa692dbcf77ebe42e96c0ef21fb283050a4edccbe8bfa793a91e</code></a>), which made four deposits between 17:25:11 and 17:26:23 UTC. All eight went to the Tornado Cash router <a class="ad" href="https://etherscan.io/address/0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b" target="_blank" rel="noopener noreferrer"><code>0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b</code></a>. With the 552 above: 560 deposits, 6,758.3 ETH. <em class="cn">(<span class="cf h"><i></i>High</span> for each transfer, <span class="cf m"><i></i>Medium</span> that the forwarding wallets are attacker-controlled)</em></div>
+</li>
+<li><div class="lead">On 10 Oct, 15 pool withdrawals of 445.2 ETH went to two wallets, 12:18:35 to 13:26:23 UTC, none relayed: <a class="ad" href="https://etherscan.io/address/0x0D697aA182801566D87aDc86E68E95fD3b2f5f82" target="_blank" rel="noopener noreferrer"><code>0x0D697aA182801566D87aDc86E68E95fD3b2f5f82</code></a> received 313.1 ETH (3 x 100, 1 x 10, 3 x 1 and 1 x 0.1) and <a class="ad" href="https://etherscan.io/address/0x676b16cC18542f37d202A1A79Ac05463395496A4" target="_blank" rel="noopener noreferrer"><code>0x676b16cC18542f37d202A1A79Ac05463395496A4</code></a> received 132.1 ETH (1 x 100, 3 x 10, 2 x 1 and 1 x 0.1). The 445.2 ETH is 440.0 ETH from the 100 and 10 ETH pools, 5.0 ETH from the 1 ETH pool and 0.2 ETH from the 0.1 ETH pool. I could not link these withdrawals to specific deposits. That the two wallets belong to the attacker set rests on their later path. <em class="cn">(<span class="cf m"><i></i>Medium</span>)</em></div>
+</li>
+<li><div class="lead">Seven hop wallets then forwarded 445.2 ETH to NEAR Intents between 12:21:11 and 13:45:59 UTC on 10 Oct (55.0, 61.0, 79.0, 59.6, 71.1, 59.7 and 59.8 ETH), the same 445.2 ETH that came out of the pools. <em class="cn">(<span class="cf h"><i></i>High</span> for each transfer, <span class="cf m"><i></i>Medium</span> for the link to the withdrawals)</em></div>
+</li>
+<li><div class="lead">NEAR Intents paid 899.71 ZEC to shielded Zcash addresses in seven transactions, 10 Oct 12:27:00 to 13:54:44 UTC (Zcash block times). The service&#x27;s own order records match each ETH deposit to one payout. The payouts, by Zcash block time (ETH sent in, ZEC paid out): 12:27:00 55.0 ETH in, 111.36 ZEC out; 12:33:30 61.0 ETH in, 123.36 ZEC out; 12:41:24 79.0 ETH in, 159.86 ZEC out; 13:33:14 59.6 ETH in, 120.51 ZEC out; 13:38:03 71.1 ETH in, 143.55 ZEC out; 13:43:01 59.7 ETH in, 120.34 ZEC out; 13:54:44 59.8 ETH in, 120.73 ZEC out. The Zcash hashes are in the appendix. The trail ends in the shielded pool. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+</ul>
+<h2 id="s5"><span class="no">05</span><span class="sep">·</span>USDD: a detour inside the rails</h2>
+<ul class="rows"><li><div class="lead">6 TRON wallets swapped USDT for USDD in 55 swaps between 9 Oct 10:40:06 and 11 Oct 16:18:45 UTC, 26,367,864 USDT in total: 32 swaps (8,622,559 USDT) at a contract that emits <code>BuyGem</code> events, which I read as the USDD Peg Stability Module, and 23 swaps (17,745,305 USDT) through a router contract whose name suggests the SunSwap family. My detector counted 57 swaps and 27,672,862.85 USDT; two transactions appeared under two wallets, and I count each once. <em class="cn">(<span class="cf h"><i></i>High</span> for each swap, <span class="cf m"><i></i>Medium</span> for the contract names)</em></div>
+</li>
+<li><div class="lead">I walked the USDD forward from the swappers&#x27; recipients and valued each walk in USD at the time of transfer: 7 walks finished, with 14,760,224 USD at the seeds. 9,572,955 USD reached labelled exits (a TRON swap venue labelled SUN, THORChain, Relay, Chainflip and the USDD contract), 4,983,502 USD sits on wallets I have not expanded, 108,659 USD went into Chainflip and I did not decode that rail, and 95,109 USD stopped at the depth limit. An eighth walk, from <a class="ad" href="https://tronscan.org/#/address/TGe3p75NtsM6DgTxUZ3GpaFXAKH6LbGQkz" target="_blank" rel="noopener noreferrer"><code>TGe3p75NtsM6DgTxUZ3GpaFXAKH6LbGQkz</code></a>, was still running at the snapshot. <em class="cn">(<span class="cf m"><i></i>Medium</span>: label-based exits, uncalibrated depth)</em></div>
+</li>
+<li><div class="lead">In the walks, USDT goes to USDD, the USDD is swapped back to USDT at the swap venue, and the USDT goes into a rail. 8,696,189 USDT of the THORChain entries and 1,305,015 USDT of the Chainflip entries in section 3 were routed this way; those transfers are already in the section 3 totals and I do not add them again. <em class="cn">(<span class="cf h"><i></i>High</span> for each transfer)</em></div>
+</li>
+</ul>
+<h2 id="s6"><span class="no">06</span><span class="sep">·</span>Bitcoin</h2>
+<ul class="rows"><li><div class="lead">122 wallets were swept into two collectors, each wallet in its own transaction with one output and no change. Block 970590, 9 Oct 05:54 UTC: 111 sweeps, 203.25674 BTC (46 into <a class="ad" href="https://mempool.space/address/bc1qqnkwurxs99xkx5t4yffqhq3u6qwy0qpjyujtm9" target="_blank" rel="noopener noreferrer"><code>bc1qqnkwurxs99xkx5t4yffqhq3u6qwy0qpjyujtm9</code></a>, 65 into <a class="ad" href="https://mempool.space/address/bc1qjqgwejnp8dc0x2938x9n9954hj97t82unx49dl" target="_blank" rel="noopener noreferrer"><code>bc1qjqgwejnp8dc0x2938x9n9954hj97t82unx49dl</code></a>). Block 970591, 9 Oct 06:15 UTC: 11 more sweeps into the second collector, 0.53146 BTC. Together 203.78822333 BTC. Sample sweep: <a class="tx" href="https://tronscan.org/#/transaction/bbae30f5eb6223b8195e62d17272dd9f542cdf995d24844be162ea8a45e2e6dc" target="_blank" rel="noopener noreferrer"><code>bbae30f5eb6223b8195e62d17272dd9f542cdf995d24844be162ea8a45e2e6dc</code></a>. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Neither collector has ever spent: in 203.78822333 BTC equals out 0 plus held 203.78822333 BTC (<a class="ad" href="https://mempool.space/address/bc1qqnkwurxs99xkx5t4yffqhq3u6qwy0qpjyujtm9" target="_blank" rel="noopener noreferrer" title="bc1qqnkwurxs99xkx5t4yffqhq3u6qwy0qpjyujtm9"><code>bc1qqnkw…jtm9</code></a> 111.28199071, <a class="ad" href="https://mempool.space/address/bc1qjqgwejnp8dc0x2938x9n9954hj97t82unx49dl" target="_blank" rel="noopener noreferrer" title="bc1qjqgwejnp8dc0x2938x9n9954hj97t82unx49dl"><code>bc1qjqgw…49dl</code></a> 92.50623262). I read every transaction of both addresses to the end, and both balances were unchanged at the snapshot. The second collector also received four 583-sat transfers from one address, which I read as address poisoning, not victims. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Three further wallets, <a class="ad" href="https://mempool.space/address/bc1qq2gz3dnwhcafw35uk997w3agtz7mgvl5ysv87c" target="_blank" rel="noopener noreferrer"><code>bc1qq2gz3dnwhcafw35uk997w3agtz7mgvl5ysv87c</code></a>, <a class="ad" href="https://mempool.space/address/bc1qynaz7ar500dxxacyfkhjyaa63y45x9a5szdsgv" target="_blank" rel="noopener noreferrer"><code>bc1qynaz7ar500dxxacyfkhjyaa63y45x9a5szdsgv</code></a> and <a class="ad" href="https://mempool.space/address/bc1qzg9q2mecv3g9s9eehjrr6pkakuvppfhgrmj33x" target="_blank" rel="noopener noreferrer"><code>bc1qzg9q2mecv3g9s9eehjrr6pkakuvppfhgrmj33x</code></a>, hold 10.43 BTC. They belong to a separate strand, and I found no on-chain link from it to the collectors or the 122 wallets (no shared transaction, no shared input, no shared counterparty within one hop), so I do not count them. The attacker-held Bitcoin figure is 203.79 BTC. <em class="cn">(<span class="cf h"><i></i>High</span> that the collectors hold it, <span class="cf m"><i></i>Medium</span> that the strand is separate)</em></div>
+</li>
+</ul>
+<h2 id="s7"><span class="no">07</span><span class="sep">·</span>The other chains</h2>
+<ul class="rows"><li><div class="lead">Avalanche: I probed all 118 Ethereum-format attacker addresses of the list at that time, one by one; none shows a transaction. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Optimism: walked from <a class="ad" href="https://etherscan.io/address/0x381825deb972B3d0a031A9ce86902AC8b22Df8F2" target="_blank" rel="noopener noreferrer"><code>0x381825deb972B3d0a031A9ce86902AC8b22Df8F2</code></a>; no activity. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Arbitrum and Base: walked from the same attacker wallets (3 walks on Arbitrum, 4 on Base); no transfer above the dust floor, valued at 0 USD. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">BNB Chain: <a class="ad" href="https://etherscan.io/address/0x033636e45d519BeBB7b5c2520Ca6CE56FBDB4F7a" target="_blank" rel="noopener noreferrer"><code>0x033636e45d519BeBB7b5c2520Ca6CE56FBDB4F7a</code></a> sent 103,656.10 USDC to a HiFiSwap bridge address at 06:37 UTC on 9 Oct and 845,272 USDT in two transfers (400,000 at 06:42, 445,272 at 06:43 UTC) to the LI.FI contract <a class="ad" href="https://etherscan.io/address/0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE" target="_blank" rel="noopener noreferrer"><code>0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE</code></a>. LI.FI&#x27;s route records show both landed on Ethereum at the same wallet: 175.94 ETH for 445,272 USDT and, through the Mayan route, 158.26 ETH for 396,204 USDT. <a class="ad" href="https://etherscan.io/address/0x83aeaC166f6832aE3500000a24510a95a052A599" target="_blank" rel="noopener noreferrer"><code>0x83aeaC166f6832aE3500000a24510a95a052A599</code></a> sent 459,473.77 USDT to <a class="ad" href="https://etherscan.io/address/0xE6AC7Be48dA05d56B6a389c23eD44041f45FA0Cb" target="_blank" rel="noopener noreferrer"><code>0xE6AC7Be48dA05d56B6a389c23eD44041f45FA0Cb</code></a> at 06:23 UTC, which paid it to Relay&#x27;s BNB Chain contract in five transfers (4 x 100,000 and 59,473.77 USDT) between 06:24 and 06:31 UTC; all five orders succeeded and paid 183.37 ETH to <a class="ad" href="https://etherscan.io/address/0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E" target="_blank" rel="noopener noreferrer" title="0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E"><code>0x468b3A…2A4E</code></a>. I left out three transfers of a look-alike token with invisible characters in its symbol. Three further BNB Chain wallets (<a class="ad" href="https://etherscan.io/address/0x69c8F401cfC6cd40Ac94691d6D7C48e3b7a47841" target="_blank" rel="noopener noreferrer"><code>0x69c8F401cfC6cd40Ac94691d6D7C48e3b7a47841</code></a>, <a class="ad" href="https://etherscan.io/address/0x381825deb972B3d0a031A9ce86902AC8b22Df8F2" target="_blank" rel="noopener noreferrer"><code>0x381825deb972B3d0a031A9ce86902AC8b22Df8F2</code></a> and <a class="ad" href="https://etherscan.io/address/0x1d32E3EB9873f5afD24d623aB5b814E2d810cE39" target="_blank" rel="noopener noreferrer"><code>0x1d32E3EB9873f5afD24d623aB5b814E2d810cE39</code></a>) were walked: all their outflows (8, 69 and 52) are below 6,772 USD each, 0.01% of the traced value. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Polygon: <a class="ad" href="https://etherscan.io/address/0x83aeaC166f6832aE3500000a24510a95a052A599" target="_blank" rel="noopener noreferrer"><code>0x83aeaC166f6832aE3500000a24510a95a052A599</code></a> sent 576,756.08 USDC at 06:09 UTC on 9 Oct to <a class="ad" href="https://etherscan.io/address/0x02EC774f7B4791410aFffD3dd098c93E9F10d1ab" target="_blank" rel="noopener noreferrer"><code>0x02EC774f7B4791410aFffD3dd098c93E9F10d1ab</code></a>, which paid it to Relay&#x27;s Polygon contract in six transfers between 06:14 and 06:22 UTC. All six orders succeeded and paid 230.83 ETH to <a class="ad" href="https://etherscan.io/address/0xfa4EaBB840A33C156E600311433AE261CBfCb0e2" target="_blank" rel="noopener noreferrer"><code>0xfa4EaBB840A33C156E600311433AE261CBfCb0e2</code></a>. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Solana: I walked five Solana wallets. <code>6Lx2Ma9LHSVXZUaJdN75uPW35APxfzjswLoW1MiMTVUy</code> sent 1,300.54 SOL to <code>MhhUk3eeCfikG1wgaXz5KAvBfbUXQg2k67ZfCPxqevh</code> at 06:08 UTC on 9 Oct, which paid 650 and 650.5 SOL to Relay at 06:10 and 06:13 UTC; both orders resolved to Ethereum payouts. I read the four Solana wallets at about 19:00 UTC, after the snapshot window: they hold dust (at most 1.44 SOL each). On 12 Oct Relay&#x27;s Solana wallet paid <code>F7p3dFrjRTbtRp8FRF6qHLomXbKRBzpvBLjtQcfcgmNe</code> six transactions that are in my rail table (13:00 to 13:02 UTC, 96,765.51 USDC and 56.41 SOL) and more payments later that day; I found no order for the six, the wallet holds assets from many other sources, and I draw no link to the drain. <em class="cn">(<span class="cf h"><i></i>High</span> for the transfers, <span class="cf l"><i></i>Low</span> for any link to the drain)</em></div>
+</li>
+</ul>
+<h2 id="s8"><span class="no">08</span><span class="sep">·</span>Held and moving</h2>
+<p class="para">Read between 18:37 and 18:46 UTC on 12 Oct: the watch read 123 wallets (Ethereum, Bitcoin and TRON addresses) and did not read the four Solana wallets, which I read separately (section 7).</p>
+<ul class="rows"><li><div class="lead">ETH: 17 wallets with at least 1 ETH each hold 18,993.32 ETH. The largest:</div>
+<div class="tw sub"><table class="t compact"><tr><th>wallet</th><th class="n">ETH</th></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E" target="_blank" rel="noopener noreferrer"><code>0x468b3A1CB8eEf055e40022dB5961e8500e2c2A4E</code></a></td><td class="n">3,100.00</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xa2F0AFC2B7af4bcc56aADaA870cA4f5Ead987a87" target="_blank" rel="noopener noreferrer"><code>0xa2F0AFC2B7af4bcc56aADaA870cA4f5Ead987a87</code></a></td><td class="n">2,237.96</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x064AF5bdf02a90435681BEa136D10EAC99c87160" target="_blank" rel="noopener noreferrer"><code>0x064AF5bdf02a90435681BEa136D10EAC99c87160</code></a></td><td class="n">1,998.50</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x3b2F9cfec7CD8DE706c64b5d4De9aB19f28DfD70" target="_blank" rel="noopener noreferrer"><code>0x3b2F9cfec7CD8DE706c64b5d4De9aB19f28DfD70</code></a></td><td class="n">1,788.39</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x5a71034c50fE5463FE5508A911051d65DB83B726" target="_blank" rel="noopener noreferrer"><code>0x5a71034c50fE5463FE5508A911051d65DB83B726</code></a></td><td class="n">1,745.20</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xfa4EaBB840A33C156E600311433AE261CBfCb0e2" target="_blank" rel="noopener noreferrer"><code>0xfa4EaBB840A33C156E600311433AE261CBfCb0e2</code></a></td><td class="n">1,692.10</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x988855aE609553deb7c522826E70322BA8510444" target="_blank" rel="noopener noreferrer"><code>0x988855aE609553deb7c522826E70322BA8510444</code></a></td><td class="n">1,585.26</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0xb88d9c9d6E7b7E989d4A2a72bA0Ec76bBC441856" target="_blank" rel="noopener noreferrer"><code>0xb88d9c9d6E7b7E989d4A2a72bA0Ec76bBC441856</code></a></td><td class="n">1,395.70</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x131c9Cafa8959A5E7cD7293Df8D5D4B0887dFA6a" target="_blank" rel="noopener noreferrer"><code>0x131c9Cafa8959A5E7cD7293Df8D5D4B0887dFA6a</code></a></td><td class="n">1,200.00</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x033636e45d519BeBB7b5c2520Ca6CE56FBDB4F7a" target="_blank" rel="noopener noreferrer"><code>0x033636e45d519BeBB7b5c2520Ca6CE56FBDB4F7a</code></a></td><td class="n">1,026.91</td></tr><tr><td><a class="ad" href="https://etherscan.io/address/0x617013EB6Fee71Daaa3eE3f339fa97315c7651E2" target="_blank" rel="noopener noreferrer"><code>0x617013EB6Fee71Daaa3eE3f339fa97315c7651E2</code></a></td><td class="n">817.50</td></tr></table>
+</div>
+<div class="trail"><em class="cn">(<span class="cf h"><i></i>High</span> for balances, <span class="cf m"><i></i>Medium</span> that each wallet belongs to the attacker)</em></div>
+</li>
+<li><div class="lead">BTC: two collectors hold 203.78822333 BTC, of which <a class="ad" href="https://mempool.space/address/bc1qqnkwurxs99xkx5t4yffqhq3u6qwy0qpjyujtm9" target="_blank" rel="noopener noreferrer"><code>bc1qqnkwurxs99xkx5t4yffqhq3u6qwy0qpjyujtm9</code></a> holds 111.28199071 and <a class="ad" href="https://mempool.space/address/bc1qjqgwejnp8dc0x2938x9n9954hj97t82unx49dl" target="_blank" rel="noopener noreferrer"><code>bc1qjqgwejnp8dc0x2938x9n9954hj97t82unx49dl</code></a> 92.50623262 (section 6). <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Moved on 12 Oct: <a class="ad" href="https://etherscan.io/address/0x3b2F9cfec7CD8DE706c64b5d4De9aB19f28DfD70" target="_blank" rel="noopener noreferrer"><code>0x3b2F9cfec7CD8DE706c64b5d4De9aB19f28DfD70</code></a> sent 40 ETH at 14:39:47 UTC and holds 1,788.39 ETH at the snapshot; <a class="ad" href="https://etherscan.io/address/0xfa4EaBB840A33C156E600311433AE261CBfCb0e2" target="_blank" rel="noopener noreferrer"><code>0xfa4EaBB840A33C156E600311433AE261CBfCb0e2</code></a> sent 40 ETH at 17:18:11 UTC and holds 1,692.10 ETH at the snapshot. Both 40 ETH went into Tornado Cash (section 4). <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+<li><div class="lead">Frozen: the 20 TRON wallets in section 2, 10,000,001.11 USDT at the snapshot. <em class="cn">(<span class="cf h"><i></i>High</span>)</em></div>
+</li>
+</ul>
+<h2 id="s9"><span class="no">09</span><span class="sep">·</span>Exchange deposit addresses</h2>
+<p class="para">Three deposit addresses at centralized exchanges received attacker-set funds. I do not name the exchanges here. <em class="cn">(<span class="cf m"><i></i>Medium</span>: deposit-address pattern, not a confirmed customer)</em></p>
+<div class="dep"><div class="dh"><span class="tm">10 Oct 11:08:11 UTC</span><span class="ch">Ethereum</span><span class="am">60 ETH</span></div>
+<div class="kv"><span class="k">from</span><span class="v"><a class="ad" href="https://etherscan.io/address/0x33Fd156c011Bd895bD9D93c1CAD83bE5Ab6e700b" target="_blank" rel="noopener noreferrer"><code>0x33Fd156c011Bd895bD9D93c1CAD83bE5Ab6e700b</code></a></span></div>
+<div class="kv"><span class="k">to (deposit address)</span><span class="v"><a class="ad" href="https://etherscan.io/address/0x5310D2f0BE3EEaC8B684EcC18232413658cC18Ba" target="_blank" rel="noopener noreferrer"><code>0x5310D2f0BE3EEaC8B684EcC18232413658cC18Ba</code></a></span></div>
+<div class="kv"><span class="k">tx</span><span class="v"><a class="tx" href="https://etherscan.io/tx/0x7cdab21d3e490c1e222a2ca6b4801e283b2034254c9dd3502e4b7ade2d8d708b" target="_blank" rel="noopener noreferrer"><code>0x7cdab21d3e490c1e222a2ca6b4801e283b2034254c9dd3502e4b7ade2d8d708b</code></a></span></div>
+</div>
+<div class="dep"><div class="dh"><span class="tm">10 Oct 11:43:11 UTC</span><span class="ch">Ethereum</span><span class="am">50 ETH</span></div>
+<div class="kv"><span class="k">from</span><span class="v"><a class="ad" href="https://etherscan.io/address/0xc164F12CE0C5B3D050AdeCE9527FEf769eB59545" target="_blank" rel="noopener noreferrer"><code>0xc164F12CE0C5B3D050AdeCE9527FEf769eB59545</code></a></span></div>
+<div class="kv"><span class="k">to (deposit address)</span><span class="v"><a class="ad" href="https://etherscan.io/address/0x95379d9ecE36c5025C4C5945C2f84645A632728F" target="_blank" rel="noopener noreferrer"><code>0x95379d9ecE36c5025C4C5945C2f84645A632728F</code></a></span></div>
+<div class="kv"><span class="k">tx</span><span class="v"><a class="tx" href="https://etherscan.io/tx/0x2e7c83f04429aa71ca2ac3433fe7b1ed574e6be46d4a850fc4aef8c2c985c50a" target="_blank" rel="noopener noreferrer"><code>0x2e7c83f04429aa71ca2ac3433fe7b1ed574e6be46d4a850fc4aef8c2c985c50a</code></a></span></div>
+</div>
+<div class="dep"><div class="dh"><span class="tm">12 Oct 10:13:03 and 11:00:03 UTC</span><span class="ch">TRON</span><span class="am">2 x 75,000 USDT</span></div>
+<div class="kv"><span class="k">from</span><span class="v"><a class="ad" href="https://tronscan.org/#/address/TCPPRajgXVBkR5Qvpd3RHh4xUvibhzrqSa" target="_blank" rel="noopener noreferrer"><code>TCPPRajgXVBkR5Qvpd3RHh4xUvibhzrqSa</code></a></span></div>
+<div class="kv"><span class="k">to (deposit address)</span><span class="v"><a class="ad" href="https://tronscan.org/#/address/TMRPKQobP6M56TNJGQeuBxbzGEnnDdgTt3" target="_blank" rel="noopener noreferrer"><code>TMRPKQobP6M56TNJGQeuBxbzGEnnDdgTt3</code></a></span></div>
+<div class="kv"><span class="k">tx</span><span class="v"><a class="tx" href="https://tronscan.org/#/transaction/08292d769989b3d92e3d16f26891d8b4f309c8e15e66a99b85e19a2f4e2cf41b" target="_blank" rel="noopener noreferrer"><code>08292d769989b3d92e3d16f26891d8b4f309c8e15e66a99b85e19a2f4e2cf41b</code></a>; <a class="tx" href="https://tronscan.org/#/transaction/360a2ba965695f2fed64a19cb22d70e721ace3590324be775c9a720cf02a5b63" target="_blank" rel="noopener noreferrer"><code>360a2ba965695f2fed64a19cb22d70e721ace3590324be775c9a720cf02a5b63</code></a></span></div>
+</div>
+<h2 id="s10"><span class="no">10</span><span class="sep">·</span>Addresses removed from my list</h2>
+<p class="para">I removed 7 addresses after checking their paths, and the rail transfers they made are out of every figure above. <em class="cn">(<span class="cf m"><i></i>Medium</span>: each rests on the absence of a path)</em></p>
+<ul class="rows"><li><div class="lead"><a class="ad" href="https://tronscan.org/#/address/THvPCrsu2BwF3NRywFYhTu9Wsfwr59cQmo" target="_blank" rel="noopener noreferrer"><code>THvPCrsu2BwF3NRywFYhTu9Wsfwr59cQmo</code></a>: a victim wallet, not an attacker wallet. It was drained once, to the drain address <a class="ad" href="https://tronscan.org/#/address/TYohhJpmXn4uuKhC1uFRCCjMWAWPJnUfGj" target="_blank" rel="noopener noreferrer"><code>TYohhJpmXn4uuKhC1uFRCCjMWAWPJnUfGj</code></a>, and Tether blacklisted it at 12:14:00 UTC on 9 Oct, which is consistent with a protective freeze.</div>
+</li>
+<li><div class="lead"><a class="ad" href="https://etherscan.io/address/0x1299e05b17f06124ba05ea54f20395c5c54de6cb" target="_blank" rel="noopener noreferrer"><code>0x1299e05b17f06124ba05ea54f20395c5c54de6cb</code></a>: the payout wallet of a swap or bridge service, not attacker-controlled.</div>
+</li>
+<li><div class="lead">Five TRON wallets with no path to the theft within eight hops: <a class="ad" href="https://tronscan.org/#/address/TFsg744fGSULJ3YFRbegRY2RHUcMaLgw7M" target="_blank" rel="noopener noreferrer"><code>TFsg744fGSULJ3YFRbegRY2RHUcMaLgw7M</code></a>, <a class="ad" href="https://tronscan.org/#/address/TMirxheYqFzUTwitUoYZQfbsBzzvZsVmu3" target="_blank" rel="noopener noreferrer"><code>TMirxheYqFzUTwitUoYZQfbsBzzvZsVmu3</code></a>, <a class="ad" href="https://tronscan.org/#/address/TQTgtJKhuBuJCAxSPv8Qis89mu2tEC5iDS" target="_blank" rel="noopener noreferrer"><code>TQTgtJKhuBuJCAxSPv8Qis89mu2tEC5iDS</code></a>, <a class="ad" href="https://tronscan.org/#/address/TTJxMakQP8gqAsJzaBrXfhqjN61JTJEKQk" target="_blank" rel="noopener noreferrer"><code>TTJxMakQP8gqAsJzaBrXfhqjN61JTJEKQk</code></a> and <a class="ad" href="https://tronscan.org/#/address/TXn41Ytbaf1kRdqRn79wHy4ZVGZ1Rocv4x" target="_blank" rel="noopener noreferrer"><code>TXn41Ytbaf1kRdqRn79wHy4ZVGZ1Rocv4x</code></a>. Two look like services: 13 and 15 unrelated senders, and none of their outflows go to attacker addresses. The five sent 31,334.91 USDT into Relay and Bridgers in 14 transfers; I took them out of the rail totals. Eight Relay orders from <a class="ad" href="https://tronscan.org/#/address/TQTgtJKhuBuJCAxSPv8Qis89mu2tEC5iDS" target="_blank" rel="noopener noreferrer" title="TQTgtJKhuBuJCAxSPv8Qis89mu2tEC5iDS"><code>TQTgtJKh…</code></a> that paid <a class="ad" href="https://etherscan.io/address/0x04b5C7b305150dB42cfcE5A3Ce255b0c643c9678" target="_blank" rel="noopener noreferrer"><code>0x04b5C7b305150dB42cfcE5A3Ce255b0c643c9678</code></a> on Polygon are out with them.</div>
+</li>
+</ul>
+<h2 id="s11"><span class="no">11</span><span class="sep">·</span>Open items</h2>
+<ul class="rows"><li><div class="lead">Walk the eighth USDD recipient (<a class="ad" href="https://tronscan.org/#/address/TGe3p75NtsM6DgTxUZ3GpaFXAKH6LbGQkz" target="_blank" rel="noopener noreferrer" title="TGe3p75NtsM6DgTxUZ3GpaFXAKH6LbGQkz"><code>TGe3p75N…</code></a>) and the 4,983,502 USD on unexpanded wallets, and value the rest of the 26,367,864 USDT of USDD swaps.</div>
+</li>
+<li><div class="lead">HiFiSwap (3 of 49), one Bridgers order and one NEAR Intents order on Solana: resolve each when the services&#x27; lookups allow.</div>
+</li>
+<li><div class="lead">Read the six Relay payouts on Solana to <code>F7p3dFrj…</code> against their orders, and attribute or exclude the wallet.</div>
+</li>
+<li><div class="lead">Link the 445.2 ETH of Tornado withdrawals to specific deposits, if a method I can calibrate exists.</div>
+</li>
+<li><div class="lead">Walk the two forwarding wallets <a class="ad" href="https://etherscan.io/address/0xF75Cb5036b1e521F6433e017490B61D27A01e5b6" target="_blank" rel="noopener noreferrer" title="0xF75Cb5036b1e521F6433e017490B61D27A01e5b6"><code>0xF75Cb503…1e5b6</code></a> and <a class="ad" href="https://etherscan.io/address/0x5531734B212Eb6930712eDA5eD8dEAac00568cF7" target="_blank" rel="noopener noreferrer" title="0x5531734B212Eb6930712eDA5eD8dEAac00568cF7"><code>0x5531734B…8cF7</code></a> further; their Tornado deposits are where I can no longer read the trail.</div>
+</li>
+<li><div class="lead">Re-read held balances and Tether&#x27;s blacklist before any update; 12 Oct 18:37 to 18:46 UTC is the only balance snapshot here.</div>
+</li>
+</ul>
+<p class="para">Per-address CSV: file 2 in this gist. Every wallet-to-wallet transfer I drew: file 3. Map of the transfers: file 4.</p>
+<h2 id="a"><span class="no">A</span><span class="sep">·</span>Appendix: transaction hashes</h2>
+<p class="para">Times in the report are block times.</p>
+<ul class="rows"><li><div class="lead">USDT0, TRON entry: <a class="tx" href="https://tronscan.org/#/transaction/14363215f8666b403ed1fc10776f9fd3dd7051898c4a93e4ba914e392edda898" target="_blank" rel="noopener noreferrer"><code>14363215f8666b403ed1fc10776f9fd3dd7051898c4a93e4ba914e392edda898</code></a>; delivered on Ethereum: <a class="tx" href="https://etherscan.io/tx/0x5e89a2847510f5be6b53c1eb30e6730fbadf888bd0c326e82e6155539cbb45a3" target="_blank" rel="noopener noreferrer"><code>0x5e89a2847510f5be6b53c1eb30e6730fbadf888bd0c326e82e6155539cbb45a3</code></a></div>
+</li>
+<li><div class="lead">THORChain, TRON entry: <a class="tx" href="https://tronscan.org/#/transaction/818b5529ca2db3d4762aef38ea953e2bb9750c82469beb9b8aee9b1116dc1a6c" target="_blank" rel="noopener noreferrer"><code>818b5529ca2db3d4762aef38ea953e2bb9750c82469beb9b8aee9b1116dc1a6c</code></a>; ETH payout to <a class="ad" href="https://etherscan.io/address/0xce29803592346a285e17d3C6595B0C0528a3C647" target="_blank" rel="noopener noreferrer"><code>0xce29803592346a285e17d3C6595B0C0528a3C647</code></a>: <a class="tx" href="https://tronscan.org/#/transaction/11bbf92f95f5578cb3e87cd58c4d4af08ed1d9023394f261eef7d66b4f2451d2" target="_blank" rel="noopener noreferrer"><code>11bbf92f95f5578cb3e87cd58c4d4af08ed1d9023394f261eef7d66b4f2451d2</code></a></div>
+</li>
+<li><div class="lead">Relay, TRON entry: <a class="tx" href="https://tronscan.org/#/transaction/3526d20dbc5484efb7d62953561b10bca9cb9630521229a68411ec0c8a325a30" target="_blank" rel="noopener noreferrer"><code>3526d20dbc5484efb7d62953561b10bca9cb9630521229a68411ec0c8a325a30</code></a>; Ethereum fill: <a class="tx" href="https://etherscan.io/tx/0x27891ecd369b91acf335069ecd948909fffbdcf8dcee12d85f007c53366a7044" target="_blank" rel="noopener noreferrer"><code>0x27891ecd369b91acf335069ecd948909fffbdcf8dcee12d85f007c53366a7044</code></a></div>
+</li>
+<li><div class="lead">NEAR Intents, TRON entry: <a class="tx" href="https://tronscan.org/#/transaction/36a78d0a4c112e86c892bef18215c8d6796755c9ec9a17a6c88a90517990ac83" target="_blank" rel="noopener noreferrer"><code>36a78d0a4c112e86c892bef18215c8d6796755c9ec9a17a6c88a90517990ac83</code></a>; Ethereum payout: <a class="tx" href="https://etherscan.io/tx/0xb1b7fc7b4911994739652507586eb8d0e4fd06434efe19b17ba041474ee6f55c" target="_blank" rel="noopener noreferrer"><code>0xb1b7fc7b4911994739652507586eb8d0e4fd06434efe19b17ba041474ee6f55c</code></a></div>
+</li>
+<li><div class="lead">Chainflip, TRON entry into the Vault (5,000 USDT): <a class="tx" href="https://tronscan.org/#/transaction/fcd93ffbc4047b7c51a0c22f04df735d4fd37f5b35ca52c8ea8adffb91e76501" target="_blank" rel="noopener noreferrer"><code>fcd93ffbc4047b7c51a0c22f04df735d4fd37f5b35ca52c8ea8adffb91e76501</code></a>; Ethereum payout: <a class="tx" href="https://etherscan.io/tx/0xf8af80d3b85e2140f30b95fbc63f335c439d1cddfb81a4af27df947236f74ad3" target="_blank" rel="noopener noreferrer"><code>0xf8af80d3b85e2140f30b95fbc63f335c439d1cddfb81a4af27df947236f74ad3</code></a></div>
+</li>
+<li><div class="lead">Collector to distributor: <a class="tx" href="https://tronscan.org/#/transaction/77a3372ec8bf99a119fde6b7666d7901cdcec8e7d7ffa4284c2aa9fdefe1dd51" target="_blank" rel="noopener noreferrer"><code>77a3372ec8bf99a119fde6b7666d7901cdcec8e7d7ffa4284c2aa9fdefe1dd51</code></a>; <a class="tx" href="https://tronscan.org/#/transaction/43c61e7090b7b71fce68ead04978ba507372bb9c54b15a284ace475ca086c50c" target="_blank" rel="noopener noreferrer"><code>43c61e7090b7b71fce68ead04978ba507372bb9c54b15a284ace475ca086c50c</code></a></div>
+</li>
+<li><div class="lead">Tornado deposit: <a class="tx" href="https://etherscan.io/tx/0x2c081416d0064e80291d8798747604c8f4cd4ed841ff90fcd1863033d87e325c" target="_blank" rel="noopener noreferrer"><code>0x2c081416d0064e80291d8798747604c8f4cd4ed841ff90fcd1863033d87e325c</code></a>; first pool withdrawal to <a class="ad" href="https://etherscan.io/address/0x0D697aA182801566D87aDc86E68E95fD3b2f5f82" target="_blank" rel="noopener noreferrer" title="0x0D697aA182801566D87aDc86E68E95fD3b2f5f82"><code>0x0D697a…5f82</code></a>: <a class="tx" href="https://etherscan.io/tx/0xa16961c9aef636b2a18733cb43ad0de5f2d09fe992f832ca73ccb9e56b1afc2c" target="_blank" rel="noopener noreferrer"><code>0xa16961c9aef636b2a18733cb43ad0de5f2d09fe992f832ca73ccb9e56b1afc2c</code></a></div>
+</li>
+<li><div class="lead">The two 40 ETH moves of 12 Oct: <a class="tx" href="https://etherscan.io/tx/0x7e345db352c8264bdd8ddff097be21cee21b03d25c187b5d148ab66575d4edfc" target="_blank" rel="noopener noreferrer"><code>0x7e345db352c8264bdd8ddff097be21cee21b03d25c187b5d148ab66575d4edfc</code></a> and <a class="tx" href="https://etherscan.io/tx/0x8d896c13dfedaa692dbcf77ebe42e96c0ef21fb283050a4edccbe8bfa793a91e" target="_blank" rel="noopener noreferrer"><code>0x8d896c13dfedaa692dbcf77ebe42e96c0ef21fb283050a4edccbe8bfa793a91e</code></a>; first Tornado deposit after each: <a class="tx" href="https://etherscan.io/tx/0x7cd07e910045b64b0a9c2e2b534c555d9a7b5f44080309933454ddc01dfebf4d" target="_blank" rel="noopener noreferrer"><code>0x7cd07e910045b64b0a9c2e2b534c555d9a7b5f44080309933454ddc01dfebf4d</code></a> and <a class="tx" href="https://etherscan.io/tx/0x241bccb5cd978ee808498c9dcb8aa50011c17e1c61578be005e9c66d61d281be" target="_blank" rel="noopener noreferrer"><code>0x241bccb5cd978ee808498c9dcb8aa50011c17e1c61578be005e9c66d61d281be</code></a></div>
+</li>
+<li><div class="lead">BNB Chain, LI.FI route payout on Ethereum: <a class="tx" href="https://etherscan.io/tx/0x7ef0d3f8c3d1a747fade2e1b1d7c755dbe9e2bcffa7d0e63b51a513f49cfd972" target="_blank" rel="noopener noreferrer"><code>0x7ef0d3f8c3d1a747fade2e1b1d7c755dbe9e2bcffa7d0e63b51a513f49cfd972</code></a>; Mayan route payout: <a class="tx" href="https://etherscan.io/tx/0xf204d26a513367104f672d9585176a700bcdecd00c483d6881994d494e9eee41" target="_blank" rel="noopener noreferrer"><code>0xf204d26a513367104f672d9585176a700bcdecd00c483d6881994d494e9eee41</code></a></div>
+</li>
+<li><div class="lead">Bitcoin, victim sweep: <a class="tx" href="https://tronscan.org/#/transaction/bbae30f5eb6223b8195e62d17272dd9f542cdf995d24844be162ea8a45e2e6dc" target="_blank" rel="noopener noreferrer"><code>bbae30f5eb6223b8195e62d17272dd9f542cdf995d24844be162ea8a45e2e6dc</code></a></div>
+</li>
+</ul>
+<p class="para">NEAR Intents to Zcash, seven payouts (Zcash block times, 10 Oct): 12:27:00 <a class="tx" href="https://tronscan.org/#/transaction/4ef0612f0227d010cbbea38d3ad58788d8d58027f0b9f62b9b242421e781e7c5" target="_blank" rel="noopener noreferrer"><code>4ef0612f0227d010cbbea38d3ad58788d8d58027f0b9f62b9b242421e781e7c5</code></a>; 12:33:30 <a class="tx" href="https://tronscan.org/#/transaction/ebc7ec63cb5e7b220a8ae5d5ef91c1c36e46e2d3173807934586c784031626ad" target="_blank" rel="noopener noreferrer"><code>ebc7ec63cb5e7b220a8ae5d5ef91c1c36e46e2d3173807934586c784031626ad</code></a>; 12:41:24 <a class="tx" href="https://blockchair.com/zcash/transaction/85e0441da8ec3241f93fdf19fbb5e204b608714899392df18e808edff0cfdf6f" target="_blank" rel="noopener noreferrer"><code>85e0441da8ec3241f93fdf19fbb5e204b608714899392df18e808edff0cfdf6f</code></a>; 13:33:14 <a class="tx" href="https://tronscan.org/#/transaction/5c4a28b4404d955bc228842274ef2978a96d944f36bd72e02761efa70ca095e9" target="_blank" rel="noopener noreferrer"><code>5c4a28b4404d955bc228842274ef2978a96d944f36bd72e02761efa70ca095e9</code></a>; 13:38:03 <a class="tx" href="https://tronscan.org/#/transaction/e7c0b42b771d6aca724527f369b7b8df83cca3dd1eda3900f705c07f5fc7834a" target="_blank" rel="noopener noreferrer"><code>e7c0b42b771d6aca724527f369b7b8df83cca3dd1eda3900f705c07f5fc7834a</code></a>; 13:43:01 <a class="tx" href="https://tronscan.org/#/transaction/b1936b55e9ce4f16b4ee0e87a04b837bde4c9ce0f673b202a365366990b20430" target="_blank" rel="noopener noreferrer"><code>b1936b55e9ce4f16b4ee0e87a04b837bde4c9ce0f673b202a365366990b20430</code></a>; 13:54:44 <a class="tx" href="https://tronscan.org/#/transaction/70a8035bf1b7d408e4588af76bbf5e76d1e27e49b8c6cd5c3f6f54e45466bf0d" target="_blank" rel="noopener noreferrer"><code>70a8035bf1b7d408e4588af76bbf5e76d1e27e49b8c6cd5c3f6f54e45466bf0d</code></a></p>
+<p class="para">Tornado withdrawals to the two thief wallets: the 15 transaction hashes are in file 3 (leg TORNADO-OUT), including the 5 x 1 ETH and 2 x 0.1 ETH withdrawals. The eight 12 Oct deposits are in file 3 (leg ETH-TORNADO, from 14:45:59 and 17:25:11 UTC).</p>
+<p class="para">Tether&#x27;s freeze of one wallet (<a class="ad" href="https://tronscan.org/#/address/TB6bJfqPjbfhg4Qa8y81CnUK3KHrN6Sd1g" target="_blank" rel="noopener noreferrer"><code>TB6bJfqPjbfhg4Qa8y81CnUK3KHrN6Sd1g</code></a>) at 12:09:42 UTC on 9 Oct, tx <a class="tx" href="https://tronscan.org/#/transaction/fbf788661c249713fd0816c8a3fe9d93313209fe8763f83249b9199d6987231a" target="_blank" rel="noopener noreferrer"><code>fbf788661c249713fd0816c8a3fe9d93313209fe8763f83249b9199d6987231a</code></a>.</p>
+<div class="foot"><div class="by">Phil Grushyn · balances read 18:46 UTC, 12 Oct 2026 · rail resolution read 18:54 UTC · all times UTC</div>
+<div class="stamp"><div><span>FORENSICS</span><span>investigation report</span></div>
+<div><span>case</span><span>LEDGER-2026-10</span></div>
+<div><span>balances</span><span>2026-10-12 18:46 UTC</span></div>
+<div><span>rails read</span><span>2026-10-12 18:54 UTC</span></div>
+</div>
+</div>
+</main></div>
+<script>
+(function(){
+  var r=document.documentElement,b=document.getElementById('th'),order=['auto','dark','light'],cur='auto';
+  try{var s=localStorage.getItem('rpt-theme');if(order.indexOf(s)>0){cur=s;r.setAttribute('data-theme',s);}}catch(e){}
+  function lab(){b.textContent='theme: '+cur;}
+  lab();
+  b.addEventListener('click',function(){
+    cur=order[(order.indexOf(cur)+1)%3];
+    if(cur==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',cur);
+    try{if(cur==='auto')localStorage.removeItem('rpt-theme');else localStorage.setItem('rpt-theme',cur);}catch(e){}
+    lab();
+  });
+})();
+</script>
+</body>
+</html>
